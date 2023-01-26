@@ -65,3 +65,63 @@ function setRandomBars() {
 function timer(ms) {
     return new Promise((res) => setTimeout(res, ms));
 }
+
+// function to swap
+
+function swap(heights, first_Index, second_Index) {
+    var temp = heights[first_Index];
+    heights[first_Index] = heights[second_Index];
+    heights[second_Index] = temp;
+}
+
+// Insertion Sort
+
+async function insertionSort(heights) {
+    var i, len = heights.length,
+        el, j;
+
+    for (i = 1; i < len; ++i) {
+        el = heights[i];
+        j = i;
+
+        while (j > 0 && heights[j - 1] > el) {
+            if (ahead == false)
+                return;
+            heights[j] = heights[j - 1];
+            $(bars[j]).height(heights[j]);
+            await timer(1);
+            --j;
+        }
+
+        heights[j] = el;
+        $(bars[j]).height(heights[j]);
+        await timer(1);
+    }
+
+    return heights;
+}
+
+var ahead = false;
+
+$("#init").click(function(e) {
+    e.preventDefault();
+
+    if (sorted)
+        return;
+
+    sorted = true;
+    ahead = true;
+
+    var option = $("#list").val();
+
+    if (option == "insertion")
+        insertionSort(heights);
+
+});
+
+$("#shuffle").click(function(e) {
+    e.preventDefault();
+    ahead = false;
+    setRandomBars();
+    sorted = false;
+});
