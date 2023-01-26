@@ -23,8 +23,15 @@ body {
     padding: 30px;
 }
 
+#sort-container {
+    height: 450px;
+    width: auto;
+    display: flex;
+    align-items: flex-end;
+}
+
 .bar {
-    width: 5px;
+    width: 10px;
     background-color: beige;
 }
 
