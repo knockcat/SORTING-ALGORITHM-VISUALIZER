@@ -199,6 +199,105 @@ async function quickSort(heights, left, right) {
     return heights;
 }
 
+
+// MERGE SORT
+
+async function mergeSort(heights) {
+
+    var n = heights.length;
+    for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
+
+        // Pick starting point of different subarrays of current size 
+
+        for (left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
+
+            // Find ending point of left subarray. mid+1 is starting  
+            // point of right 
+
+            var a = left_start + curr_size - 1;
+            var b = n - 1;
+            var mid = a < b ? a : b;
+
+            //var mid = min(left_start + curr_size - 1, n-1);
+
+            a = left_start + 2 * curr_size - 1;
+            b = n - 1;
+            var right_end = a < b ? a : b;
+
+            //var right_end = min(left_start + 2*curr_size - 1, n-1); 
+
+            var l = left_start;
+            var m = mid;
+            var r = right_end;
+            var i, j, k;
+            var n1 = m - l + 1;
+            var n2 = r - m;
+
+            /* create temp arrays */
+
+            var L = new Array(n1);
+            var R = new Array(n2);
+
+            /* Copy data to temp arrays L[] and R[] */
+
+            for (i = 0; i < n1; i++)
+                L[i] = heights[l + i];
+            for (j = 0; j < n2; j++)
+                R[j] = heights[m + 1 + j];
+
+            /* Merge the temp arrays back into heights[l..r]*/
+
+            i = 0;
+            j = 0;
+            k = l;
+
+            while (i < n1 && j < n2) {
+                if (ahead == false)
+                    return;
+
+                if (L[i] <= R[j]) {
+                    heights[k] = L[i];
+                    $(bars[k]).height(heights[k]);
+                    await timer(1);
+                    i++;
+                } else {
+                    heights[k] = R[j];
+                    $(bars[k]).height(heights[k]);
+                    await timer(1);
+                    j++;
+                }
+                k++;
+            }
+
+            /* Copy the remaining elements of L[], if there are any */
+
+            while (i < n1) {
+                if (ahead == false)
+                    return;
+                heights[k] = L[i];
+                $(bars[k]).height(heights[k]);
+                await timer(1);
+                i++;
+                k++;
+            }
+
+            /* Copy the remaining elements of R[], if there are any */
+
+            while (j < n2) {
+                if (ahead == false)
+                    return;
+                heights[k] = R[j];
+                $(bars[k]).height(heights[k]);
+                await timer(1);
+                j++;
+                k++;
+            }
+        }
+    }
+}
+
+
+
 var ahead = false;
 
 $("#init").click(function(e) {
@@ -220,6 +319,8 @@ $("#init").click(function(e) {
         bubbleSort(heights);
     else if (option == "quick")
         quickSort(heights, 0, heights.length - 1);
+    else if (option == "merge")
+        mergeSort(heights);
 
 });
 
