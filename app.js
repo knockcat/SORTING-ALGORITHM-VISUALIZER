@@ -147,6 +147,58 @@ async function bubbleSort(heights) {
 }
 
 
+// QUICK SORT
+
+async function quickSort(heights, left, right) {
+
+    var index;
+
+    if (heights.length > 1) {
+        var pivot = heights[Math.floor((right + left) / 2)], // middle element
+            i = left, // left  pointer
+            j = right; // right pointer
+
+        while (i <= j) {
+            if (ahead == false)
+                return;
+            while (heights[i] < pivot) {
+                if (ahead == false)
+                    return;
+                ++i;
+            }
+            while (heights[j] > pivot) {
+                if (ahead == false)
+                    return;
+                --j;
+            }
+
+            if (i <= j) {
+                swap(heights, i, j); // swappint passed indexes
+                $(bars[i]).height(heights[i]);
+                $(bars[j]).height(heights[j]);
+                await timer(50);
+                ++i;
+                --j;
+            }
+
+        }
+
+        index = i;
+
+        if (left < index - 1) {
+            // more elements on the left side of the pivot
+            quickSort(heights, left, index - 1);
+        }
+
+        if (index < right) {
+            // more elements on the right side of the pivot
+            quickSort(heights, index, right);
+        }
+    }
+
+    return heights;
+}
+
 var ahead = false;
 
 $("#init").click(function(e) {
@@ -166,6 +218,8 @@ $("#init").click(function(e) {
         selectionSort(heights, 0, heights.length - 1);
     else if (option == "bubble")
         bubbleSort(heights);
+    else if (option == "quick")
+        quickSort(heights, 0, heights.length - 1);
 
 });
 
