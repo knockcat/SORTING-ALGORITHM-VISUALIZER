@@ -322,6 +322,46 @@ async function countingSort(heights, min, max) {
 }
 
 
+// SHELL SORT
+
+async function shellSort(heights) {
+
+    var increment = heights.length / 2;
+
+    while (increment > 0) {
+        for (i = increment; i < heights.length; ++i) {
+            if (ahead == false)
+                return;
+
+            var j = i;
+            var temp = heights[i];
+
+            while (j >= increment && heights[j - increment] > temp) {
+                if (ahead == false)
+                    return;
+
+                heights[j] = heights[j - increment];
+                $(bars[j]).height(heights[j]);
+                await timer(1);
+
+                j = j - increment;
+            }
+
+            heights[j] = temp;
+            $(bars[j]).height(heights[j]);
+            await timer(1);
+        }
+
+        if (increment == 2)
+            increment = 1;
+        else
+            increment = parseInt(increment * 5 / 11);
+    }
+
+    return heights;
+}
+
+
 var ahead = false;
 
 $("#init").click(function(e) {
@@ -347,6 +387,8 @@ $("#init").click(function(e) {
         mergeSort(heights);
     else if (option == "count")
         countingSort(heights, 0, 400);
+    else if (option == "shell")
+        shellSort(heights);
 
 });
 
