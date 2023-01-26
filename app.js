@@ -297,6 +297,30 @@ async function mergeSort(heights) {
 }
 
 
+// COUNTING SORT
+
+async function countingSort(heights, min, max) {
+    var i, z = 0,
+        count = [];
+
+    for (i = min; i <= max; ++i)
+        count[i] = 0;
+
+    for (i = 0; i < heights.length; ++i)
+        ++count[heights[i]];
+
+    for (i = min; i <= max; ++i) {
+        while (count[i]-- > 0) {
+            if (ahead == false)
+                return;
+            heights[z++] = i;
+            $(bars[z - 1]).height(heights[z - 1]);
+            await timer(10);
+        }
+    }
+    return heights;
+}
+
 
 var ahead = false;
 
@@ -321,6 +345,8 @@ $("#init").click(function(e) {
         quickSort(heights, 0, heights.length - 1);
     else if (option == "merge")
         mergeSort(heights);
+    else if (option == "count")
+        countingSort(heights, 0, 400);
 
 });
 
