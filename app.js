@@ -362,6 +362,65 @@ async function shellSort(heights) {
 }
 
 
+// RADIX SORT
+
+async function radixSort(heights) {
+
+    var counter = [
+        []
+    ];
+
+    var max = 0,
+        mod = 10,
+        high = 1; // max
+
+    for (var i = 0; i < heights.length; ++i) {
+        if (ahead == false)
+            return;
+        if (heights[i] > max) {
+            max = heights[i];
+        }
+    }
+
+    // determine the large item length
+
+    var maxDigitLength = (max + '').length;
+
+    for (var i = 0; i < maxDigitLength; ++i, high *= 10, mod *= 10) {
+        for (var j = 0; j < heights.length; ++j) {
+            if (ahead == false)
+                return;
+
+            // for getting significant digit
+            var bucket = Math.floor((heights[j] % mod) / high);
+
+            if (counter[bucket] == undefined) {
+                counter[bucket] = [];
+            }
+
+            counter[bucket].push(heights[j]);
+
+        }
+
+        var pos = 0;
+
+        for (var j = 0; j < counter.length; ++j) {
+            var value = undefined;
+
+            if (counter[j] != undefined) {
+                while ((value = counter[j].shift()) != undefined) {
+                    if (ahead == false)
+                        return;
+                    heights[pos++] = value;
+
+                    $(bars[pos - 1]).height(heights[pos - 1]);
+                    await timer(8);
+                }
+            }
+        }
+    }
+}
+
 var ahead = false;
 
 $("#init").click(function(e) {
@@ -389,6 +448,8 @@ $("#init").click(function(e) {
         countingSort(heights, 0, 400);
     else if (option == "shell")
         shellSort(heights);
+    else if (option == "radix")
+        radixSort(heights);
 
 });
 
