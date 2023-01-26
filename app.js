@@ -127,6 +127,26 @@ async function selectionSort(heights) {
 }
 
 
+// BUBBLE SORT
+
+async function bubbleSort(heights) {
+    var len = heights.length;
+    for (var i = len - 1; i >= 0; --i) {
+        for (var j = 1; j <= i; ++j) {
+            if (ahead == false)
+                return;
+            if (heights[j - 1] > heights[j]) {
+                swap(heights, j - 1, j);
+                $(bars[j]).height(heights[j]);
+                $(bars[j - 1]).height(heights[j - 1]);
+                await timer(1);
+            }
+        }
+    }
+    return heights;
+}
+
+
 var ahead = false;
 
 $("#init").click(function(e) {
@@ -144,6 +164,8 @@ $("#init").click(function(e) {
         insertionSort(heights);
     else if (option == "selection")
         selectionSort(heights, 0, heights.length - 1);
+    else if (option == "bubble")
+        bubbleSort(heights);
 
 });
 
