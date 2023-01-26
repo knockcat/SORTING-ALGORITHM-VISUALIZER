@@ -101,6 +101,32 @@ async function insertionSort(heights) {
     return heights;
 }
 
+// SELECTION SORT
+
+async function selectionSort(heights) {
+    var minIdx, temp, len = heights.length;
+
+    for (var i = 0; i < len; ++i) {
+        minIdx = i;
+        for (var j = i + 1; j < len; ++j) {
+            if (ahead == false)
+                return;
+            if (heights[j] < heights[minIdx])
+                minIdx = j;
+        }
+
+        temp = heights[i];
+        heights[i] = heights[minIdx];
+        heights[minIdx] = temp;
+        $(bars[i]).height(heights[i]);
+        $(bars[minIdx]).height(heights[minIdx]);
+        await timer(50);
+    }
+
+    return heights;
+}
+
+
 var ahead = false;
 
 $("#init").click(function(e) {
@@ -116,6 +142,8 @@ $("#init").click(function(e) {
 
     if (option == "insertion")
         insertionSort(heights);
+    else if (option == "selection")
+        selectionSort(heights, 0, heights.length - 1);
 
 });
 
